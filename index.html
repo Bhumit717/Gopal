@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GJ Gadhiya | Developer Portfolio</title>
+    <meta name="description"
+        content="Portfolio of GJ Gadhiya, a Web & Programming Enthusiast specializing in HTML, CSS, JS, Python, and SQL.">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👨‍💻</text></svg>">
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="loader-content">
+            <div class="logo-loader">
+                <span class="logo-letter">G</span>
+                <span class="logo-letter">J</span>
+            </div>
+            <div class="loader-text">Loading Portfolio...</div>
+            <div class="progress-loader">
+                <div class="progress-bar" id="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-text">GJ</span>
+                <span class="logo-sub">GADHIYA</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#home" class="nav-link active"><i class="fas fa-home"></i><span>Home</span></a>
+                <a href="#about" class="nav-link"><i class="fas fa-user"></i><span>About</span></a>
+                <a href="#skills" class="nav-link"><i class="fas fa-code"></i><span>Skills</span></a>
+                <a href="#education" class="nav-link"><i class="fas fa-graduation-cap"></i><span>Education</span></a>
+                <a href="#contact" class="nav-link"><i class="fas fa-envelope"></i><span>Contact</span></a>
+            </div>
+            <button class="menu-toggle" id="menu-toggle"><i class="fas fa-bars"></i></button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title animate__animated animate__fadeInDown">Hello, I'm <span class="highlight">GJ
+                        Gadhiya</span></h1>
+                <h2 class="hero-subtitle animate__animated animate__fadeInUp">Web & Programming Enthusiast</h2>
+                <p class="hero-description animate__animated animate__fadeIn">Creating functional websites with HTML,
+                    CSS, JavaScript, Python & SQL.</p>
+                <div class="hero-buttons animate__animated animate__fadeIn">
+                    <a href="#contact" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Contact Me</a>
+                    <a href="#skills" class="btn btn-secondary"><i class="fas fa-eye"></i> View Skills</a>
+                </div>
+                <div class="hero-social">
+                    <a href="mailto:gjgadhiya122@gmail.com" class="social-link" title="Email"><i
+                            class="fas fa-envelope"></i></a>
+                    <a href="#" class="social-link" title="GitHub"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="floating-shapes">
+                    <div class="shape shape-html"><i class="fab fa-html5"></i></div>
+                    <div class="shape shape-css"><i class="fab fa-css3-alt"></i></div>
+                    <div class="shape shape-js"><i class="fab fa-js"></i></div>
+                    <div class="shape shape-python"><i class="fab fa-python"></i></div>
+                    <div class="shape shape-sql"><i class="fas fa-database"></i></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section about-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">About Me</h2>
+                <p class="section-subtitle">Get to know me better</p>
+            </div>
+            <div class="about-content">
+                <div class="about-image">
+                    <div class="profile-card">
+                        <div class="profile-image"><i class="fas fa-user"></i></div>
+                        <div class="profile-info">
+                            <h3>GJ Gadhiya</h3>
+                            <p>Web Developer</p>
+                            <div class="profile-contact">
+                                <p><i class="fas fa-envelope"></i> gjgadhiya122@gmail.com</p>
+                                <p><i class="fas fa-map-marker-alt"></i> Gujarat, India</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-text">
+                    <h3>Welcome to My Digital Space</h3>
+                    <p>I'm a passionate developer focused on front-end technologies and expanding into full-stack. I
+                        enjoy turning ideas into clean, efficient code.</p>
+                    <p>I'm constantly learning and experimenting with new technologies to build user-friendly digital
+                        experiences.</p>
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <div class="stat-number" data-count="50">0</div>
+                            <div class="stat-label">Projects</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" data-count="2">0</div>
+                            <div class="stat-label">Years Experience</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section skills-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">My Technical Skills</h2>
+                <p class="section-subtitle">Technologies I work with daily</p>
+            </div>
+            <div class="skills-container">
+                <!-- Skill Card 1: HTML -->
+                <div class="skill-card" data-skill="html">
+                    <div class="skill-icon"><i class="fab fa-html5"></i></div>
+                    <h3 class="skill-title">HTML5</h3>
+                    <div class="skill-level">
+                        <div class="level-bar">
+                            <div class="level-fill" style="width: 95%"></div>
+                        </div>
+                        <span class="level-text">95%</span>
+                    </div>
+                    <p class="skill-description">Semantic markup, Accessibility, SEO</p>
+                    <button class="skill-btn">View Details</button>
+                </div>
+                <!-- Skill Card 2: CSS -->
+                <div class="skill-card" data-skill="css">
+                    <div class="skill-icon"><i class="fab fa-css3-alt"></i></div>
+                    <h3 class="skill-title">CSS3</h3>
+                    <div class="skill-level">
+                        <div class="level-bar">
+                            <div class="level-fill" style="width: 90%"></div>
+                        </div>
+                        <span class="level-text">90%</span>
+                    </div>
+                    <p class="skill-description">Flexbox, Grid, Responsive Design</p>
+                    <button class="skill-btn">View Details</button>
+                </div>
+                <!-- Skill Card 3: JavaScript -->
+                <div class="skill-card" data-skill="js">
+                    <div class="skill-icon"><i class="fab fa-js"></i></div>
+                    <h3 class="skill-title">JavaScript</h3>
+                    <div class="skill-level">
+                        <div class="level-bar">
+                            <div class="level-fill" style="width: 85%"></div>
+                        </div>
+                        <span class="level-text">85%</span>
+                    </div>
+                    <p class="skill-description">DOM, ES6+, Basic Algorithms</p>
+                    <button class="skill-btn">View Details</button>
+                </div>
+                <!-- Skill Card 4: Python -->
+                <div class="skill-card" data-skill="python">
+                    <div class="skill-icon"><i class="fab fa-python"></i></div>
+                    <h3 class="skill-title">Python</h3>
+                    <div class="skill-level">
+                        <div class="level-bar">
+                            <div class="level-fill" style="width: 80%"></div>
+                        </div>
+                        <span class="level-text">80%</span>
+                    </div>
+                    <p class="skill-description">Basics, Data Structures, Scripting</p>
+                    <button class="skill-btn">View Details</button>
+                </div>
+                <!-- Skill Card 5: SQL -->
+                <div class="skill-card" data-skill="sql">
+                    <div class="skill-icon"><i class="fas fa-database"></i></div>
+                    <h3 class="skill-title">SQL</h3>
+                    <div class="skill-level">
+                        <div class="level-bar">
+                            <div class="level-fill" style="width: 75%"></div>
+                        </div>
+                        <span class="level-text">75%</span>
+                    </div>
+                    <p class="skill-description">Queries, Joins, Database Design</p>
+                    <button class="skill-btn">View Details</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skill Modal -->
+    <div class="skill-modal" id="skill-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modal-skill-title">Skill Details</h2>
+                <button class="close-modal" id="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body" id="modal-skill-body"></div>
+        </div>
+    </div>
+
+    <!-- Education Section -->
+    <section id="education" class="section education-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Education & Learning</h2>
+                <p class="section-subtitle">My academic and professional journey</p>
+            </div>
+            <div class="education-timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date"><span class="date-year">2020 - 2024</span><span
+                            class="date-status">Present</span></div>
+                    <div class="timeline-content">
+                        <div class="timeline-icon"><i class="fas fa-graduation-cap"></i></div>
+                        <h3 class="timeline-title">Bachelor's in Computer Science</h3>
+                        <p class="timeline-institution">Gujarat University</p>
+                        <p class="timeline-description">Pursuing degree with focus on web development, data structures,
+                            algorithms, and database management.</p>
+                        <div class="timeline-skills">
+                            <span class="skill-tag">Programming</span>
+                            <span class="skill-tag">Web Dev</span>
+                            <span class="skill-tag">DBMS</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date"><span class="date-year">2018 - 2020</span><span
+                            class="date-status">Completed</span></div>
+                    <div class="timeline-content">
+                        <div class="timeline-icon"><i class="fas fa-school"></i></div>
+                        <h3 class="timeline-title">Higher Secondary (Science)</h3>
+                        <p class="timeline-institution">Gujarat Board</p>
+                        <p class="timeline-description">Completed 12th grade with Physics, Chemistry, Mathematics, and
+                            Computer Science.</p>
+                        <div class="timeline-skills">
+                            <span class="skill-tag">Math</span>
+                            <span class="skill-tag">Computer Science</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date"><span class="date-year">2022 - 2023</span><span
+                            class="date-status">Certified</span></div>
+                    <div class="timeline-content">
+                        <div class="timeline-icon"><i class="fas fa-certificate"></i></div>
+                        <h3 class="timeline-title">Online Certifications</h3>
+                        <p class="timeline-institution">Various Platforms</p>
+                        <p class="timeline-description">Completed courses in web development, Python programming, and
+                            database management online.</p>
+                        <div class="timeline-skills">
+                            <span class="skill-tag">HTML/CSS</span>
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">Python</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section contact-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Get In Touch</h2>
+                <p class="section-subtitle">Let's discuss your project</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-card">
+                        <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                        <h3>Primary Email</h3>
+                        <p>gjgadhiya122@gmail.com</p>
+                        <a href="mailto:gjgadhiya122@gmail.com" class="contact-link">Send Email <i
+                                class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-icon"><i class="fab fa-whatsapp"></i></div>
+                        <h3>WhatsApp</h3>
+                        <p>Via CallMeBot API</p>
+                        <a href="#" class="contact-link" id="whatsapp-demo-link">Send Test Message <i
+                                class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="contact-form-container">
+                    <h3 class="form-title">Send Me a Message</h3>
+                    <p class="form-subtitle">Have a question or proposal? Fill out the form below.</p>
+                    <form id="whatsappContactForm" class="contact-form">
+                        <div class="form-group">
+                            <input type="text" id="w_name" name="name" placeholder="Your Name" required>
+                            <i class="fas fa-user input-icon"></i>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="w_email" name="email" placeholder="Your Email" required>
+                            <i class="fas fa-envelope input-icon"></i>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="w_subject" name="subject" placeholder="Message Subject" required>
+                            <i class="fas fa-tag input-icon"></i>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="w_message" name="message" placeholder="Your detailed message here..." rows="4"
+                                required></textarea>
+                            <i class="fas fa-comment input-icon"></i>
+                        </div>
+                        <button type="submit" class="btn btn-primary submit-btn">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>GJ GADHIYA</h3>
+                    <p>Developer Portfolio</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#home">Home</a>
+                    <a href="#skills">Skills</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <div class="footer-social">
+                    <a href="mailto:gjgadhiya122@gmail.com" class="social-icon"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="current-year"></span> GJ Gadhiya. Portfolio with Spark Animations & CallMeBot API.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></button>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
